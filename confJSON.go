@@ -1,4 +1,4 @@
-package сonfJSON
+package confJSON
 
 import (
 	"encoding/json"
