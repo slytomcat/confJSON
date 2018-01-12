@@ -1,3 +1,8 @@
+/*Package confJSON - is a simple tool to read/store configuration in the JSON format file.
+Values stored as empty interface. So, to use values yo have to convert them to required format.
+
+Note that saved int value will be read as float64!
+*/
 package confJSON
 
 import (
@@ -5,21 +10,8 @@ import (
 	"log"
 	"os"
 )
-/*
- * ConfJSON - is a simple tool to read/store configuration in the JSON format file.
- *
- * Functions:
- *
- *   Load(file string, cfg *map[string]interface{})
- *
- * Load reads JSON file in to cfg map. All JSON keys become keys of map and all values
- * are stored as empty interface. So to use values yo have to convert them to requered format.
- *
- *   Save(file string, cfg map[string]interface{})
- *
- * Save stores configuration map in to JSON-formated file.
- * */
 
+// Load reads JSON file in to cfg map.
 func Load(file string, cfg *map[string]interface{}) {
 	f, err := os.Open(file)
 	if err != nil {
@@ -29,6 +21,7 @@ func Load(file string, cfg *map[string]interface{}) {
 	json.NewDecoder(f).Decode(&cfg)
 }
 
+// Save stores configuration map in to JSON-formated file.
 func Save(file string, cfg map[string]interface{}) {
 	f, err := os.Create(file)
 	if err != nil {
