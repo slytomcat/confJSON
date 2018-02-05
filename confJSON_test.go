@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-	//"log"
 )
 
 var fileName string
@@ -41,7 +40,8 @@ func ExampleSave() {
 	s := string(data[1 : l-1])
 	s = strings.Replace(s, ",", "\n", -1)
 	fmt.Println(s)
-	// Unordered output: "key1":"value1"
+	// Unordered output:
+	// "key1":"value1"
 	// "key2":42
 	// "key3":true
 }
