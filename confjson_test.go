@@ -1,4 +1,4 @@
-package confJSON
+package confjson
 
 import (
 	"fmt"

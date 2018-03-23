@@ -1,9 +1,9 @@
-/*Package confJSON - is a simple tool to read/store configuration in the JSON format file.
+/*Package confjson - is a simple tool to read/store configuration in the JSON format file.
 Values stored as empty interface. So, to use values yo have to convert them to required format.
 
 Note that saved int value will be read as float64!
 */
-package confJSON
+package confjson
 
 import (
 	"encoding/json"
