@@ -21,7 +21,7 @@ func Load(file string, cfg *map[string]interface{}) {
 	json.NewDecoder(f).Decode(&cfg)
 }
 
-// Save stores configuration map in to JSON-formated file.
+// Save stores configuration map in to JSON-formatted file.
 func Save(file string, cfg map[string]interface{}) {
 	f, err := os.Create(file)
 	if err != nil {
