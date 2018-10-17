@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11.1
+    steps:
+      - checkout
+      - run: 
+          name: Build
+          command: 'go build'
+  test:
+    docker:
+      - image: circleci/golang:1.11.1
+    steps:
+      - checkout
+      - run: 
+          name: Tests
+          command:  'go test -v -race -coverprofile cover.out'
+      - run: 
+          name: Format coverage
+          command: 'go tool cover -html=cover.out -o coverage.html'
+      - store_artifacts:
+          path: coverage.html
+          prefix: coverage
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
