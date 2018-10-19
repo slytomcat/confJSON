@@ -7,27 +7,30 @@ package confjson
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"os"
 )
 
 // Load reads JSON file in to cfg map.
-func Load(file string, cfg *map[string]interface{}) {
+func Load(file string) (*map[string]interface{}, error) {
 	f, err := os.Open(file)
 	if err != nil {
-		log.Fatal("Configuration file can't be read:", err)
+		return nil, fmt.Errorf("Configuration file can't be read: %v", err)
 	}
 	defer f.Close()
+	cfg := make(map[string]interface{})
 	json.NewDecoder(f).Decode(&cfg)
+	return &cfg, nil
 }
 
 // Save stores configuration map in to JSON-formatted file.
-func Save(file string, cfg map[string]interface{}) {
+func Save(file string, cfg map[string]interface{}) error {
 	f, err := os.Create(file)
 	if err != nil {
-		log.Fatal("Can't access to configuration file:", err)
+		return fmt.Errorf("Can't access configuration file: %v", err)
 	}
 	defer f.Close()
 	buf, _ := json.Marshal(cfg)
 	f.Write(buf)
+	return nil
 }

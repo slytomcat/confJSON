@@ -25,7 +25,10 @@ func ExampleSave() {
 		"key2": 42,
 		"key3": true,
 	}
-	Save(fileName, conf)
+	err := Save(fileName, conf)
+	if err != nil {
+		log.Fatal(err)
+	}
 	// read the file
 	file, err := os.Open(fileName)
 	if err != nil {
@@ -47,15 +50,38 @@ func ExampleSave() {
 }
 
 func ExampleLoad() {
-	readCfg := make(map[string]interface{})
-	Load(fileName, &readCfg)
 
-	for k, v := range readCfg {
+	readCfg, err := Load(fileName)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for k, v := range *readCfg {
 		fmt.Printf("%s: %#v\n", k, v)
 	}
 	// Unordered output:
 	// key1: "value1"
 	// key2: 42
 	// key3: true
+}
+
+func TestNoFileRead(t *testing.T) {
+
+	_, err := Load("/fie_xyz_bad")
+
+	if err == nil {
+		t.Error("Succesful read from non-existing file")
+	}
+}
+
+func TestNoFileSave(t *testing.T) {
+	readCfg := make(map[string]interface{})
+
+	err := Save("/fie_xyz_bad", readCfg)
+
+	if err == nil {
+		t.Error("Succesful save to inaccessible file")
+	}
 
 }
