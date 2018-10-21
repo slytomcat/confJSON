@@ -85,3 +85,24 @@ func TestNoFileSave(t *testing.T) {
 	}
 
 }
+
+func TestLoadParseError(t *testing.T) {
+
+	file, err := os.Create(fileName)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	_, err = file.WriteString("{\"key1\":\"value1\",\"key2\":42,\"key3\"=true}")
+	if err != nil {
+		file.Close()
+		t.Fatal(err)
+	}
+	file.Sync()
+	file.Close()
+
+	_, err = Load(fileName)
+	if err == nil {
+		t.Error("Succesful read from incorrect file")
+	}
+}

@@ -8,6 +8,7 @@ package confjson
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 )
 
@@ -19,7 +20,10 @@ func Load(file string) (*map[string]interface{}, error) {
 	}
 	defer f.Close()
 	cfg := make(map[string]interface{})
-	json.NewDecoder(f).Decode(&cfg)
+	err = json.NewDecoder(f).Decode(&cfg)
+	if err != nil && err != io.EOF {
+		return nil, fmt.Errorf("Configuration file can be parsed: %v", err)
+	}
 	return &cfg, nil
 }
 
@@ -30,7 +34,10 @@ func Save(file string, cfg map[string]interface{}) error {
 		return fmt.Errorf("Can't access configuration file: %v", err)
 	}
 	defer f.Close()
-	buf, _ := json.Marshal(cfg)
+	buf, err := json.Marshal(cfg)
+	if err != nil {
+		return fmt.Errorf("Can't encode configuration data: %v", err)
+	}
 	f.Write(buf)
 	return nil
 }
