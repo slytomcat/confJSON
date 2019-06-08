@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.11.1:bionic
+      - image: circleci/golang:1.12.1:bionic
     steps:
       - checkout
       - run: 
@@ -10,7 +10,7 @@ jobs:
           command: go build
   test:
     docker:
-      - image: circleci/golang:1.11.1
+      - image: circleci/golang:1.12.1:bionic
     steps:
       - checkout
       - run: 
