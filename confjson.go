@@ -13,7 +13,7 @@ import (
 )
 
 // Load reads JSON file in to cfg map.
-func Load(file string) (*map[string]interface{}, error) {
+func Load(file string) (map[string]interface{}, error) {
 	f, err := os.Open(file)
 	if err != nil {
 		return nil, fmt.Errorf("Configuration file can't be read: %v", err)
@@ -24,7 +24,7 @@ func Load(file string) (*map[string]interface{}, error) {
 	if err != nil && err != io.EOF {
 		return nil, fmt.Errorf("Configuration file can be parsed: %v", err)
 	}
-	return &cfg, nil
+	return cfg, nil
 }
 
 // Save stores configuration map in to JSON-formatted file.

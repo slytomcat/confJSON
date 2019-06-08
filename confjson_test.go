@@ -57,7 +57,7 @@ func ExampleLoad() {
 		log.Fatal(err)
 	}
 
-	for k, v := range *readCfg {
+	for k, v := range readCfg {
 		fmt.Printf("%s: %#v\n", k, v)
 	}
 	// Unordered output:
